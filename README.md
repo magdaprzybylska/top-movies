@@ -24,6 +24,47 @@ Before you get started, make sure you have the following:
 
 Replace your_secret_key, your_database_uri, and your_tmdb_api_key with your own values.
 
+
+## Using pre-commit for Code Quality Checks
+
+This project uses [pre-commit](https://pre-commit.com/), a framework for managing and maintaining multi-language pre-commit hooks. Pre-commit helps ensure that your codebase is consistently formatted and free of common issues before each commit.
+
+### Installation
+
+To get started with pre-commit, follow these steps:
+
+1. **Install pre-commit:**
+
+   `pip install pre-commit`
+
+2. **Set up pre-commit in your repository:**
+
+    `pre-commit install`
+
+3. **Install flake8:**
+
+    `pip install flake8`
+
+4. **Install black:**
+
+    `pip install black`
+
+This command installs pre-commit hooks defined in the .pre-commit-config.yaml file into your Git hooks al well as flake8 linter and black formatting tool. Now, these hooks will run automatically before each commit.
+
+
+### Pre-commit Hooks
+
+[pre-commit/pre-commit-hooks](https://github.com/pre-commit/pre-commit-hooks)
+
+
+This repository provides a variety of pre-commit hooks for common code quality checks. In your project, the following hooks are configured:
+
+- `check-yaml`: Checks that YAML files are valid.
+- `end-of-file-fixer`:
+Ensures files end with a newline.
+- `trailing-whitespace` : Removes trailing whitespaces from the end of lines.
+- `requirements-txt-fixer` : Sorts and updates the `requirements.txt` file.
+
 ## Features
 
 1. Home Page: View a list of movies ranked by user ratings.
@@ -53,4 +94,3 @@ This project uses the following libraries and technologies:
 This project is open-source and available under the MIT License.
 
 Enjoy ranking your favorite movies!
-
