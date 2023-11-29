@@ -7,10 +7,14 @@ repos:
     -   id: trailing-whitespace
     -   id: requirements-txt-fixer
 -   repo: https://github.com/psf/black
-    rev: ''
+    rev: 23.11.0
     hooks:
     -   id: black
 -   repo: https://github.com/pycqa/flake8
-    rev: ''  # pick a git hash / tag to point to
+    rev: 6.1.0
     hooks:
     -   id: flake8
+-   repo: https://github.com/motet-a/jinjalint
+    rev: 01e0a4d8
+    hooks:
+        - id: jinjalint

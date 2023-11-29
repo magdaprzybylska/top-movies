@@ -6,7 +6,7 @@ Before you get started, make sure you have the following:
 
 - Python installed on your system.
 - A TMDb API key, which you can obtain by signing up at TMDb.
-- A PostgreSQL database (or other compatible database) and the corresponding database URI.
+- A SQLite database (or other compatible database) and the corresponding database URI.
 
 ## Installation
 1. Clone or download the project from the GitHub repository.
@@ -87,7 +87,7 @@ This project uses the following libraries and technologies:
 - Flask-WTF: For working with web forms.
 - Flask-Bootstrap5: For Bootstrap integration.
 - TMDb API: For retrieving movie data.
-- PostgreSQL: As the database system.
+- SQLite: As the database system.
 - The Movie Database (TMDb): The source for movie details and images.
 
 ## License
