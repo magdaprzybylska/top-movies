@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}We're sorry!{% endblock %}
+
+<h1>{{ error }}</h1>
+
+<h2>Please click <a href="{{ url_for('main.home') }}">here</a>  to come back to the main page and try different movie. </h2>
+
+{% endblock %}

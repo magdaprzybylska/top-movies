@@ -9,12 +9,17 @@
 
     <form method="POST">
       <div class="mb-3">
-        <label for="rating" class="form-label">Your Rating: </label>
-        <input type="text" class="form-control" id="rating" name="rating">
+        {{ form.csrf_token }}
+        <p>
+          {{ form.rating.label}}
+          {{ form.rating}}
+        </p>
       </div>
       <div class="mb-3">
-        <label for="review" class="form-label">Your Review: </label>
-        <input type="text" class="form-control" id="review" name="review">
+        <p>
+          {{ form.review.label }}
+          {{ form.review }}
+        </p>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

@@ -1,12 +1,16 @@
 from app import db
+import sqlalchemy as sa
+import sqlalchemy.orm as so
 
 
 class Movie(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, unique=True)
-    year = db.Column(db.Integer)
-    description = db.Column(db.String)
-    rating = db.Column(db.Float)
-    ranking = db.Column(db.Integer)
-    review = db.Column(db.String)
-    img_url = db.Column(db.String)
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    title: so.Mapped[str] = so.mapped_column(sa.String(128), unique=True)
+    year: so.Mapped[int] = so.mapped_column(sa.Integer())
+    description: so.Mapped[str] = so.mapped_column(sa.String(500))
+    rating: so.Mapped[float] = so.mapped_column(sa.Float(3), nullable=True)
+    review: so.Mapped[str] = so.mapped_column(sa.String(500), nullable=True)
+    img_url: so.Mapped[str] = so.mapped_column(sa.String(500))
+
+    def __repr__(self):
+        return "<Movie {}".format(self.title)
