@@ -1,5 +1,5 @@
 import os
-import datetime
+import datetime as dt
 import requests
 
 from app import db
@@ -19,7 +19,7 @@ class MovieService:
         self.url = os.path.join(MOVIE_API_URL, "movie", f"{movie_id}?language=en-US")
         response = requests.get(self.url, headers=self.headers).json()
         release_date = response["release_date"]
-        parsed_date = datetime.strptime(release_date, "%Y-%m-%d")
+        parsed_date = dt.datetime.strptime(release_date, "%Y-%m-%d")
         year = parsed_date.year
         new_movie = Movie(
             title=response["original_title"],
@@ -37,6 +37,3 @@ class MovieService:
         response = requests.get(self.url, headers=self.headers, params=params).json()
         data = response["results"]
         return data
-
-
-# add try and except to this funtion, try movie_id(int)

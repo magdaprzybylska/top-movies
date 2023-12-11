@@ -1,7 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
-import requests
 import os
-from datetime import datetime
 
 from app.main import bp
 from app import db
