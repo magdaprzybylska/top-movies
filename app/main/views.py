@@ -1,19 +1,25 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, current_app
+from configparser import ConfigParser
 import os
 
 from app.main import bp
 from app import db
+from app.config import api
 from app.main.models import Movie
 from app.main.forms import MovieTitleForm, RatingForm
 from app.main.movie_service import MovieService
 
+# config = ConfigParser()
+# config.read_dict(api)
+# api_token = config['api']['api_token']
+api_token = os.getenv("ACCESS_TOKEN_AUTH")
 
 headers = {
     "accept": "application/json",
-    "Authorization": f"Bearer {os.getenv('ACCESS_TOKEN_AUTH')}",
+    "Authorization": f"Bearer {api_token}",
 }
 
-movie_service = MovieService(headers)
+movie_service = MovieService(headers, db)
 
 
 @bp.route("/")
@@ -23,7 +29,7 @@ def home():
 
     movie_ratings = [(str(movie).strip("(),")) for movie in movie_ratings]
 
-    # I tried to figure out problem with ranking but for now I feel like I've spent too much much uneffective time on it. I'll let it rest for now and hope the answer will come miraculously to me. Otherwise, I hope we can discuss this problem on our next meeting.
+    # TODO add ranking functionality
 
     # for x in range(len(movie_rankings)):
     #     ranking = x + 1
@@ -56,12 +62,10 @@ def edit():
     return render_template("edit.html", title=movie_title, form=form)
 
 
-@bp.route("/delete", methods=["GET", "POST"])
+@bp.route("/delete", methods=["GET", "DELETE"])
 def delete():
     movie_id = request.args.get("id")
-    movie_to_delete = db.get_or_404(Movie, movie_id)
-    db.session.delete(movie_to_delete)
-    db.session.commit()
+    movie_service.delete_movie(movie_id)
     return redirect(url_for("main.home"))
 
 
@@ -71,6 +75,7 @@ def add():
     if form.validate_on_submit():
         title = form.title.data
         api_data = movie_service.get_movies_to_select(title)
+        print()
         return render_template("select.html", data=api_data)
     return render_template("add.html", form=form)
 
@@ -79,7 +84,6 @@ def add():
 def find_movie():
     try:
         movie_id = int(request.args.get("id"))
-
         if movie_id is not None:
             new_movie = movie_service.get_movie(movie_id)
             return redirect(url_for("main.edit", id=new_movie.id))
