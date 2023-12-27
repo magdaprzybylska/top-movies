@@ -75,6 +75,7 @@ def add():
     if form.validate_on_submit():
         title = form.title.data
         api_data = movie_service.get_movies_to_select(title)
+        print()
         return render_template("select.html", data=api_data)
     return render_template("add.html", form=form)
 
