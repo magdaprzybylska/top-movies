@@ -73,6 +73,13 @@ This repository provides a variety of pre-commit hooks for common code quality c
 - `trailing-whitespace` : Removes trailing whitespaces from the end of lines.
 - `requirements-txt-fixer` : Sorts and updates the `requirements.txt` file.
 
+# How to run tests
+
+```
+
+python -m pytest tests
+```
+
 ## Features
 
 1. Home Page: View a list of movies ranked by user ratings.
