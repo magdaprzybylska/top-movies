@@ -1,29 +1,39 @@
 # Movie Ranking Web App
+
 This is a Python web application built using Flask that allows you to maintain a list of movies and rank them based on user ratings. Users can search for movies, add them to their list, and edit or delete movies as needed. The app also retrieves movie data from The Movie Database (TMDb) to display movie details.
 
 ## Prerequisites
+
 Before you get started, make sure you have the following:
 
 - Python installed on your system.
 - A TMDb API key, which you can obtain by signing up at TMDb.
 - A SQLite database (or other compatible database) and the corresponding database URI.
 
+* [Virtualenv](https://virtualenv.pypa.io/en/latest/)
+
 ## Installation
+
 1. Clone or download the project from the GitHub repository.
 2. Navigate to the project directory in your terminal.
 3. Create a virtual environment (optional but recommended).
+
+`virtualenv venv3 -p python3.12`
+`source venv3/bin/activate`
+
 4. Install the required dependencies.
 
 `pip install -r requirements.txt`
 
 5. Create a .env file in the project root directory with the following content:
 
+`cp .env-examples ./app/.env`
+
 `SECRET_KEY=your_secret_key`
 `SQLALCHEMY_DATABASE_URI=your_database_uri`
 `ACCESS_TOKEN_AUTH=your_tmdb_api_key`
 
 Replace your_secret_key, your_database_uri, and your_tmdb_api_key with your own values.
-
 
 ## Using pre-commit for Code Quality Checks
 
@@ -39,29 +49,27 @@ To get started with pre-commit, follow these steps:
 
 2. **Set up pre-commit in your repository:**
 
-    `pre-commit install`
+   `pre-commit install`
 
 3. **Install flake8:**
 
-    `pip install flake8`
+   `pip install flake8`
 
 4. **Install black:**
 
-    `pip install black`
+   `pip install black`
 
 This command installs pre-commit hooks defined in the .pre-commit-config.yaml file into your Git hooks al well as flake8 linter and black formatting tool. Now, these hooks will run automatically before each commit.
-
 
 ### Pre-commit Hooks
 
 [pre-commit/pre-commit-hooks](https://github.com/pre-commit/pre-commit-hooks)
 
-
 This repository provides a variety of pre-commit hooks for common code quality checks. In your project, the following hooks are configured:
 
 - `check-yaml`: Checks that YAML files are valid.
 - `end-of-file-fixer`:
-Ensures files end with a newline.
+  Ensures files end with a newline.
 - `trailing-whitespace` : Removes trailing whitespaces from the end of lines.
 - `requirements-txt-fixer` : Sorts and updates the `requirements.txt` file.
 
@@ -73,6 +81,7 @@ Ensures files end with a newline.
 4. Delete Movie: Delete a movie from your list.
 
 ## Usage
+
 1. To start server, run your local server the program and click in link provided in console.
 2. To add a movie, click "Add Movie," enter the movie title, and click "Search." Select a movie from the search results, and it will be added to your list.
 3. To edit a movie, click "Edit" next to a movie. You can update the rating and add a review.
@@ -80,6 +89,7 @@ Ensures files end with a newline.
 5. The movie list is automatically ranked based on user ratings.
 
 ## Credits
+
 This project uses the following libraries and technologies:
 
 - Flask: A Python web framework.
@@ -91,6 +101,7 @@ This project uses the following libraries and technologies:
 - The Movie Database (TMDb): The source for movie details and images.
 
 ## License
+
 This project is open-source and available under the MIT License.
 
 Enjoy ranking your favorite movies!
