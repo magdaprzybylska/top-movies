@@ -1,17 +1,15 @@
-from flask import render_template, request, redirect, url_for, current_app
-from configparser import ConfigParser
+from flask import render_template, request, redirect, url_for
 import os
 
 from app.main import bp
 from app import db
-from app.config import api
+
 from app.main.models import Movie
 from app.main.forms import MovieTitleForm, RatingForm
-from app.main.movie_service import MovieService
+from app.main.movie_data_service import MovieDataService
+from app.main.api_caller import MovieApiCaller
 
-# config = ConfigParser()
-# config.read_dict(api)
-# api_token = config['api']['api_token']
+
 api_token = os.getenv("ACCESS_TOKEN_AUTH")
 
 headers = {
@@ -19,7 +17,8 @@ headers = {
     "Authorization": f"Bearer {api_token}",
 }
 
-movie_service = MovieService(headers, db)
+data_service = MovieDataService(db)
+api_caller = MovieApiCaller(headers)
 
 
 @bp.route("/")
@@ -62,10 +61,10 @@ def edit():
     return render_template("edit.html", title=movie_title, form=form)
 
 
-@bp.route("/delete", methods=["GET", "DELETE"])
+@bp.route("/delete", methods=["GET"])
 def delete():
     movie_id = request.args.get("id")
-    movie_service.delete_movie(movie_id)
+    data_service.delete_movie(movie_id)
     return redirect(url_for("main.home"))
 
 
@@ -74,7 +73,7 @@ def add():
     form = MovieTitleForm()
     if form.validate_on_submit():
         title = form.title.data
-        api_data = movie_service.get_movies_to_select(title)
+        api_data = api_caller.get_movies_to_select(title)
         print()
         return render_template("select.html", data=api_data)
     return render_template("add.html", form=form)
@@ -85,7 +84,8 @@ def find_movie():
     try:
         movie_id = int(request.args.get("id"))
         if movie_id is not None:
-            new_movie = movie_service.get_movie(movie_id)
+            api_data = api_caller.get_movie(movie_id)
+            new_movie = data_service.add_movie_to_db(api_data)
             return redirect(url_for("main.edit", id=new_movie.id))
         else:
             return render_template(
