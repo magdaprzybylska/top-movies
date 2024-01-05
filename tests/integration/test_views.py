@@ -29,7 +29,7 @@ def test_verify_if_index_page_shows_movies(client: FlaskClient):
     assert [new_movie.title, new_movie_2.title] == actual_titles
 
 
-def test_verify_if_empty_db_doesnt_show_any_movie(client: FlaskClient):
+def test_verify_if_empty_db_doesnt_show_any_movies(client: FlaskClient):
     # when
     response = client.get("/")
     # then
