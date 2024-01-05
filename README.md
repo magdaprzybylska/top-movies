@@ -6,10 +6,9 @@ This is a Python web application built using Flask that allows you to maintain a
 
 Before you get started, make sure you have the following:
 
-- Python installed on your system.
-- A TMDb API key, which you can obtain by signing up at TMDb.
-- A SQLite database (or other compatible database) and the corresponding database URI.
-
+* Python installed on your system.
+* A TMDb API key, which you can obtain by signing up at TMDb.
+* A SQLite database (or other compatible database) and the corresponding database URI.
 * [Virtualenv](https://virtualenv.pypa.io/en/latest/)
 
 ## Installation
@@ -30,7 +29,7 @@ Before you get started, make sure you have the following:
 `cp .env-examples ./app/.env`
 
 `SECRET_KEY=your_secret_key`
-`SQLALCHEMY_DATABASE_URI=your_database_uri`
+`SQLALCHEMY_DATABASE_URI=sqlite:///../instance/movies.db`
 `ACCESS_TOKEN_AUTH=your_tmdb_api_key`
 
 Replace your_secret_key, your_database_uri, and your_tmdb_api_key with your own values.
@@ -76,8 +75,13 @@ This repository provides a variety of pre-commit hooks for common code quality c
 # How to run tests
 
 ```
-
 python -m pytest tests
+```
+
+# How to run app
+
+```
+python run.py
 ```
 
 ## Features
