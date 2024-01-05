@@ -1,6 +1,7 @@
 from app.main.models import Movie
 
 
+# This class is responsible for updating (adding and deleting) movie database
 class MovieDataService:
     def __init__(self, db):
         self.db = db
