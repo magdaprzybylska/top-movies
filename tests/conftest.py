@@ -1,26 +1,28 @@
 import pytest
 import os
-from dotenv import load_dotenv
 
-from app import create_app
+from app import create_app, db
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-load_dotenv(os.path.join(basedir, ".env"))
 
 
-class Config(object):
-    SECRET_KEY = os.getenv("SECRET_KEY")
-    SQLALCHEMY_DATABASE_URI = "sqlite://"
+class TestConfig(object):
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     TESTING = True
 
 
-@pytest.fixture()
+@pytest.fixture(scope="function")
 def app():
-    app = create_app(config_class=Config)
-    return app
+    app = create_app(TestConfig)
+    with app.app_context():
+        db.create_all()
+        yield app
+        db.session.remove()
+        db.drop_all()
 
 
-@pytest.fixture()
+@pytest.fixture(scope="function")
 def client(app):
     return app.test_client()
