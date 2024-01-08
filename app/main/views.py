@@ -3,8 +3,9 @@ import os
 
 from app.main import bp
 from app import db
+from app import ma
 
-from app.main.models import Movie
+from app.main.models import Movie, MovieSchema
 from app.main.forms import MovieTitleForm, RatingForm
 from app.main.movie_data_service import MovieDataService
 from app.main.api_caller import MovieApiCaller
@@ -19,6 +20,7 @@ headers = {
 
 data_service = MovieDataService(db)
 api_caller = MovieApiCaller(headers)
+movie_schema = MovieSchema(ma)
 
 
 @bp.route("/")
@@ -29,6 +31,7 @@ def home():
     movie_ratings = [(str(movie).strip("(),")) for movie in movie_ratings]
 
     # TODO add ranking functionality
+    # TODO add marshmallow schema and fix db bug
 
     # for x in range(len(movie_rankings)):
     #     ranking = x + 1
