@@ -1,4 +1,5 @@
-from app import db
+from app import db, ma
+
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 
@@ -14,3 +15,8 @@ class Movie(db.Model):
 
     def __repr__(self):
         return "<Movie {}".format(self.title)
+
+
+class MovieSchema(ma.ModelSchema):
+    class Meta:
+        model = Movie
