@@ -47,10 +47,9 @@ def home():
     return render_template("index.html", movies=movies, rankings=ranking)
 
 
-@bp.route("/edit", methods=["GET", "POST"])
-def edit():
+@bp.route("/edit/<movie_id>", methods=["GET", "POST"])
+def edit(movie_id):
     form = RatingForm()
-    movie_id = request.args.get("id")
     chosen_movie = db.get_or_404(Movie, movie_id)
     movie_title = chosen_movie.title
     if form.validate_on_submit():
@@ -59,13 +58,6 @@ def edit():
         db.session.commit()
         return redirect(url_for("main.home"))
     return render_template("edit.html", title=movie_title, form=form)
-
-
-@bp.route("/delete", methods=["GET"])
-def delete():
-    movie_id = request.args.get("id")
-    data_service.delete_movie(movie_id)
-    return redirect(url_for("main.home"))
 
 
 @bp.route("/add", methods=["POST", "GET"])
@@ -82,11 +74,11 @@ def add():
 @bp.route("/find", methods=["GET", "POST"])
 def find_movie():
     try:
-        movie_id = int(request.args.get("id"))
+        movie_id = request.args.get("id")
         if movie_id is not None:
             api_data = api_caller.get_movie(movie_id)
             new_movie = data_service.add_movie_to_db(api_data)
-            return redirect(url_for("main.edit", id=new_movie.id))
+            return redirect(url_for("main.edit", movie_id=new_movie.id))
         else:
             return render_template(
                 "404.html",
@@ -96,3 +88,12 @@ def find_movie():
         return render_template(
             "404.html", error="Please provide valid movie ID. It must be an integer."
         )
+
+
+@bp.route("/delete/<movie_id>", methods=["GET", "POST"])
+def delete(movie_id):
+    if request.form.get("_method") == "DELETE":
+        data_service.delete_movie(movie_id)
+        return redirect(url_for("main.home"))
+    else:
+        return render_template("404.html", error="Invalid method.")
